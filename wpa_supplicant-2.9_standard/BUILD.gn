@@ -519,6 +519,13 @@ ohos_shared_library("wpa") {
   if (wpa_supplicant_config_ext_auth) {
     cflags += [ "-DEXT_AUTHENTICATION_SUPPORT" ]
   }
+  # QEMU uses the WPA HDI for scan completion, without chip scan offload.
+  # Other products retain their existing chip/updater event selection.
+  if (defined(product_name) &&
+      (product_name == "arm64_virt" || product_name == "armv7a_virt" ||
+       product_name == "x86_64_virt")) {
+    cflags += [ "-DCONFIG_QEMU_WPA_SCAN_EVENTS" ]
+  }
   if ("${CONFIG_CTRL_IFACE}" == "udp") {
     cflags += [ "-DCONFIG_CTRL_IFACE_UDP" ]
   } else {

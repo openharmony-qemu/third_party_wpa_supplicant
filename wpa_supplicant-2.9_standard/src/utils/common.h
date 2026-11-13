@@ -650,6 +650,14 @@ int StrtoInt(const char *input);
 
 #ifdef CONFIG_OPEN_HARMONY_PATCH
 bool IsUpdaterMode(void);
+static inline bool IsWpaScanEventEnabled(void)
+{
+#ifdef CONFIG_QEMU_WPA_SCAN_EVENTS
+    return true;
+#else
+    return IsUpdaterMode();
+#endif
+}
 #endif /* CONFIG_OPEN_HARMONY_PATCH */
 
 /*
